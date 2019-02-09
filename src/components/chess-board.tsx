@@ -5,12 +5,13 @@ import Space from "./space";
 
 class ChessBoard extends Component<
   { chooseSpace: (space: Space) => void },
-  { board: Array<Space> }
+  { board: Array<Space>; flipped: boolean }
 > {
   constructor(props: { chooseSpace: (space: Space) => void }) {
     super(props);
     this.state = {
-      board: this.createBoard()
+      board: this.createBoard(),
+      flipped: false
     };
   }
 
@@ -27,7 +28,10 @@ class ChessBoard extends Component<
                     className={`space ${space.color}`}
                     key={f}
                     onClick={() => this.onClickSpace(space)}
-                  />
+                  >
+                    {space.file}
+                    {space.rank}
+                  </div>
                 );
               })}
             </div>
@@ -43,8 +47,9 @@ class ChessBoard extends Component<
       .map((_space, i) => this.createSpace(i));
   };
 
-  createSpace = (index: number): Space => {
-    return new Space(file(index), rank(index), color(index));
+  createSpace = (i: number): Space => {
+    const f = false;
+    return new Space(file(i, f), rank(i, f), color(i, f));
   };
 
   onClickSpace = (space: Space) => {

@@ -1,15 +1,24 @@
 import Space from "../components/space";
 
+const BOARD_SIZE = 8;
 const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
-const file = (i: number): string => {
-  return FILES[i % 8];
+const file = (i: number, flipped: boolean): string => {
+  let index = i % BOARD_SIZE;
+  if (flipped) {
+    index = 7 - index;
+  }
+  return FILES[index];
 };
 
-const rank = (i: number): number => 8 - Math.floor(i / 8);
+const rank = (i: number, flipped: boolean): number => {
+  return flipped
+    ? Math.floor(i / BOARD_SIZE) + 1
+    : BOARD_SIZE - Math.floor(i / BOARD_SIZE);
+};
 
-const color = (i: number): string => {
-  if (rank(i) % 2 === 0) {
+const color = (i: number, flipped: boolean): string => {
+  if (rank(i, flipped) % 2 === 0) {
     return i % 2 === 0 ? "black" : "white";
   } else {
     return i % 2 === 0 ? "white" : "black";
@@ -18,7 +27,7 @@ const color = (i: number): string => {
 
 const randomSpace = (): Space => {
   const i = Math.floor(Math.random() * 64);
-  return new Space(file(i), rank(i), color(i));
+  return new Space(file(i, false), rank(i, false), color(i, false));
 };
 
 export { color, file, rank, randomSpace };
