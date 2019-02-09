@@ -12,7 +12,7 @@ import { randomSpace } from "./utilities/board";
 class App extends Component<
   {},
   {
-    highlighted: Space | null;
+    highlighted: Map<string, string>;
     results: Array<Result>;
     space: Space;
     timeLastAssigned: moment.Moment;
@@ -22,7 +22,7 @@ class App extends Component<
     super(props);
 
     this.state = {
-      highlighted: null,
+      highlighted: new Map(),
       results: [],
       space: randomSpace(),
       timeLastAssigned: moment()
@@ -47,13 +47,16 @@ class App extends Component<
   }
 
   chooseSpace = (space: Space) => {
+    const result = space.sameAs(this.state.space);
     const now = moment();
+    const newHighlight = new Map();
+    newHighlight.set(this.state.space.asString(), result ? "green" : "red");
     this.setState({
-      highlighted: this.state.space,
+      highlighted: newHighlight,
       timeLastAssigned: now,
       results: [
         new Result(
-          space.sameAs(this.state.space),
+          result,
           this.state.space,
           now.diff(this.state.timeLastAssigned) / 1000.0
         ),

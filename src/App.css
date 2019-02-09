@@ -4,7 +4,7 @@
   width: 100%;
 }
 
-.board {
+.board, .controls {
   width: 400px;
   margin: 25px auto;
 }
@@ -18,32 +18,26 @@
   flex-direction: row;
 }
 
-.rank:last-child {
-  border-bottom: 1px solid black;
-}
-
 .space {
   width: 50px;
   height: 50px;
-  border: 1px solid black;
-  border-bottom: 0px;
-  border-right: 0px;
-}
-
-.space:last-child {
-  border-right: 1px solid black;
+  transition: background-color 0.2s ease;
 }
 
 .space.white {
-  background: white;
+  background: #DEE3E6;
 }
 
 .space.black {
-  background: gray;
+  background: #8BA2AE;
 }
 
-.space.highlighted {
-  background: green;
+.space.green {
+  background: #56FF65;
+}
+
+.space.red {
+  background: #FF6B56;
 }
 
 .instruction {

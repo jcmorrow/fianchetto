@@ -15,6 +15,8 @@ class Space {
     }
     return space.rank === this.rank && space.file === this.file;
   };
+
+  asString = () => `${this.file}${this.rank}`;
 }
 
 export default Space;

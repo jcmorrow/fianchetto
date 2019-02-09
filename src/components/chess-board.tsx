@@ -4,12 +4,15 @@ import { color, file, rank } from "../utilities/board";
 import Space from "./space";
 
 class ChessBoard extends Component<
-  { chooseSpace: (space: Space) => void; highlighted: Space | null },
+  {
+    chooseSpace: (space: Space) => void;
+    highlighted: Map<string, string>;
+  },
   { board: Array<Space>; flipped: boolean; labels: boolean }
 > {
   constructor(props: {
     chooseSpace: (space: Space) => void;
-    highlighted: Space | null;
+    highlighted: Map<string, string>;
   }) {
     super(props);
     this.state = {
@@ -20,6 +23,8 @@ class ChessBoard extends Component<
   }
 
   render() {
+    const { highlighted } = this.props;
+    const { board, labels } = this.state;
     return (
       <div>
         <div className="board">
@@ -27,18 +32,16 @@ class ChessBoard extends Component<
             return (
               <div className="rank" key={r}>
                 {new Array(8).fill(undefined).map((_f, f) => {
-                  const space = this.state.board[r * 8 + f];
+                  const space = board[r * 8 + f];
                   return (
                     <div
-                      className={`space ${space.color} ${
-                        space.sameAs(this.props.highlighted)
-                          ? "highlighted"
-                          : ""
-                      }`}
+                      className={`space ${space.color} ${highlighted.get(
+                        space.asString()
+                      ) || ""}`}
                       key={f}
                       onClick={() => this.onClickSpace(space)}
                     >
-                      {this.state.labels ? `${space.file}${space.rank}` : ""}
+                      {labels ? space.asString() : ""}
                     </div>
                   );
                 })}
@@ -46,8 +49,10 @@ class ChessBoard extends Component<
             );
           })}
         </div>
-        <button onClick={this.flipBoard}>Flip Board</button>
-        <button onClick={this.toggleLabels}>Toggle Labels</button>
+        <div className="controls">
+          <button onClick={this.flipBoard}>Flip Board</button>
+          <button onClick={this.toggleLabels}>Toggle Labels</button>
+        </div>
       </div>
     );
   }
