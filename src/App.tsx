@@ -1,18 +1,31 @@
 import React, { Component } from "react";
+import moment from "moment";
 import "./App.css";
 
 import Space from "./components/space";
+import Result from "./components/result";
 import ChessBoard from "./components/chess-board";
+import Results from "./components/results";
 import Instruction from "./components/instruction";
 import { randomSpace } from "./utilities/board";
 
-class App extends Component<{}, { highlighted: Space | null; space: Space }> {
+class App extends Component<
+  {},
+  {
+    highlighted: Space | null;
+    results: Array<Result>;
+    space: Space;
+    timeLastAssigned: moment.Moment;
+  }
+> {
   constructor(props: Object) {
     super(props);
 
     this.state = {
       highlighted: null,
-      space: randomSpace()
+      results: [],
+      space: randomSpace(),
+      timeLastAssigned: moment()
     };
   }
 
@@ -24,17 +37,26 @@ class App extends Component<{}, { highlighted: Space | null; space: Space }> {
           highlighted={this.state.highlighted}
           chooseSpace={this.chooseSpace}
         />
+        <Results results={this.state.results} />
       </div>
     );
   }
 
   chooseSpace = (space: Space) => {
-    if (space.sameAs(this.state.space)) {
-      console.log("CORRECT");
-    } else {
-      console.log("INCORRECT");
-    }
-    this.setState({ highlighted: this.state.space, space: randomSpace() });
+    const now = moment();
+    this.setState({
+      highlighted: this.state.space,
+      timeLastAssigned: now,
+      results: [
+        new Result(
+          space.sameAs(this.state.space),
+          this.state.space,
+          now.diff(this.state.timeLastAssigned) / 1000.0
+        ),
+        ...this.state.results
+      ],
+      space: randomSpace()
+    });
   };
 }
 

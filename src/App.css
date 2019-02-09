@@ -46,3 +46,9 @@ body {
   text-transform: uppercase;
   color: #444;
 }
+
+.result {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
