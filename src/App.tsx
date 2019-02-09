@@ -1,28 +1,40 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
-class App extends Component {
+import Space from "./components/space";
+import ChessBoard from "./components/chess-board";
+import Instruction from "./components/instruction";
+import { randomSpace } from "./utilities/board";
+
+class App extends Component<{}, { space: Space }> {
+  constructor(props: Object) {
+    super(props);
+
+    this.state = {
+      space: randomSpace()
+    };
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Instruction space={this.state.space} />
+        <ChessBoard chooseSpace={this.chooseSpace} />
       </div>
     );
   }
+
+  chooseSpace = (space: Space) => {
+    if (
+      space.rank === this.state.space.rank &&
+      space.file === this.state.space.file
+    ) {
+      console.log("CORRECT");
+    } else {
+      console.log("INCORRECT");
+    }
+    this.setState({ space: randomSpace() });
+  };
 }
 
 export default App;
