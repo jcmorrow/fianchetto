@@ -31,13 +31,17 @@ class App extends Component<
 
   render() {
     return (
-      <div className="App">
-        <Instruction space={this.state.space} />
-        <ChessBoard
-          highlighted={this.state.highlighted}
-          chooseSpace={this.chooseSpace}
-        />
-        <Results results={this.state.results} />
+      <div className="app">
+        <div className="left">
+          <Instruction space={this.state.space} />
+          <ChessBoard
+            highlighted={this.state.highlighted}
+            chooseSpace={this.chooseSpace}
+          />
+        </div>
+        <div className="right">
+          <Results results={this.state.results} />
+        </div>
       </div>
     );
   }

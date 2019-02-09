@@ -12,16 +12,18 @@ const file = (i: number, flipped: boolean): string => {
 };
 
 const rank = (i: number, flipped: boolean): number => {
-  return flipped
-    ? Math.floor(i / BOARD_SIZE) + 1
-    : BOARD_SIZE - Math.floor(i / BOARD_SIZE);
+  if (flipped) {
+    return Math.floor(i / BOARD_SIZE) + 1;
+  } else {
+    return BOARD_SIZE - Math.floor(i / BOARD_SIZE);
+  }
 };
 
 const color = (i: number, flipped: boolean): string => {
-  if (rank(i, flipped) % 2 === 0) {
-    return i % 2 === 0 ? "black" : "white";
-  } else {
+  if (rank(i, false) % 2 === 0) {
     return i % 2 === 0 ? "white" : "black";
+  } else {
+    return i % 2 === 0 ? "black" : "white";
   }
 };
 

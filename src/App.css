@@ -1,9 +1,16 @@
-body {
+.app {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  width: 100%;
 }
+
 .board {
-  margin: 50px auto;
+  width: 400px;
+  margin: 25px auto;
+}
+
+.left, .right {
+  flex-grow: 1;
 }
 
 .rank {
@@ -47,8 +54,13 @@ body {
   color: #444;
 }
 
+.results {
+  margin-top: 100px;
+  width: 100%;
+}
+
 .result {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
