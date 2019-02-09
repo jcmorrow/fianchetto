@@ -6,11 +6,12 @@ import ChessBoard from "./components/chess-board";
 import Instruction from "./components/instruction";
 import { randomSpace } from "./utilities/board";
 
-class App extends Component<{}, { space: Space }> {
+class App extends Component<{}, { highlighted: Space | null; space: Space }> {
   constructor(props: Object) {
     super(props);
 
     this.state = {
+      highlighted: null,
       space: randomSpace()
     };
   }
@@ -19,21 +20,21 @@ class App extends Component<{}, { space: Space }> {
     return (
       <div className="App">
         <Instruction space={this.state.space} />
-        <ChessBoard chooseSpace={this.chooseSpace} />
+        <ChessBoard
+          highlighted={this.state.highlighted}
+          chooseSpace={this.chooseSpace}
+        />
       </div>
     );
   }
 
   chooseSpace = (space: Space) => {
-    if (
-      space.rank === this.state.space.rank &&
-      space.file === this.state.space.file
-    ) {
+    if (space.sameAs(this.state.space)) {
       console.log("CORRECT");
     } else {
       console.log("INCORRECT");
     }
-    this.setState({ space: randomSpace() });
+    this.setState({ highlighted: this.state.space, space: randomSpace() });
   };
 }
 

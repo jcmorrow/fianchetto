@@ -4,10 +4,13 @@ import { color, file, rank } from "../utilities/board";
 import Space from "./space";
 
 class ChessBoard extends Component<
-  { chooseSpace: (space: Space) => void },
+  { chooseSpace: (space: Space) => void; highlighted: Space | null },
   { board: Array<Space>; flipped: boolean }
 > {
-  constructor(props: { chooseSpace: (space: Space) => void }) {
+  constructor(props: {
+    chooseSpace: (space: Space) => void;
+    highlighted: Space | null;
+  }) {
     super(props);
     this.state = {
       board: this.createBoard(),
@@ -25,13 +28,12 @@ class ChessBoard extends Component<
                 const space = this.state.board[r * 8 + f];
                 return (
                   <div
-                    className={`space ${space.color}`}
+                    className={`space ${space.color} ${
+                      space.sameAs(this.props.highlighted) ? "highlighted" : ""
+                    }`}
                     key={f}
                     onClick={() => this.onClickSpace(space)}
-                  >
-                    {space.file}
-                    {space.rank}
-                  </div>
+                  />
                 );
               })}
             </div>

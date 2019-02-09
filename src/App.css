@@ -35,6 +35,10 @@ body {
   background: gray;
 }
 
+.space.highlighted {
+  background: green;
+}
+
 .instruction {
   text-align: center;
   font-size: 4rem;

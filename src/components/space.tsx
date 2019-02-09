@@ -8,6 +8,13 @@ class Space {
     this.rank = rank;
     this.color = color;
   }
+
+  sameAs = (space: Space | null): boolean => {
+    if (space === null) {
+      return false;
+    }
+    return space.rank === this.rank && space.file === this.file;
+  };
 }
 
 export default Space;
